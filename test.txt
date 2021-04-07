@@ -1,0 +1,17 @@
+Cargando el archivo MAFXX-banco-malla.csv...
+Comprobando nombre del archivo:
+-> Por definir ...
+El archivo SI contiene las columnas necesarias
+Comprobando columnas:
+-> BIEN!, El archivo SI contiene el número total de columnas que podría tener
+Comprobando si el nombre de las mallas contiene prefijo válido:
+-> BIEN!, El nombre de las mallas SI cumple el formato de prefijos
+Revisando si existen mallas con sufijo "_vm":
+-> Se han econtrado 144 mallas con sufijo "_vm"
+Revisando identificador de pozo en la malla de perforación:
+-> Existen 5 pozos que no podrán ser importador por ser AUX o vacio
+Asegurando exactitud valores numericos:
+... falta guardar archivo como .csv ...
+Asegurando formato de valores ...
+1. Asegurando columnas formato texto:
+Abriendo carpeta: /workspace/Drillit_script ...
