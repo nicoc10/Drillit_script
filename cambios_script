@@ -1,11 +1,23 @@
 - Columnas que faltan -> detalle, declarar columnas
 - Crear columnas vacias si aplica (25 de referencia)
 - Comparacion con columnas criticas 
-- Agregar estadisticos de datos faltantes (vs 5 y vs 25)
 - Agregar explosivos (diseño y real)
 - Eliminar si no cumple con alguna de las 5 columnas criticas (agregar detalle)
 - imprimir pozos no cargables 
+
+
+
+
 - banco: 4 digitos
 - malla: 2 digitos
+- Agregar estadisticos de datos faltantes (vs 5 y vs 25)z
+
+
+
 - csv -> formato malla 
 - 
+
+
+--> Filtrar con las columnas que si tengan info en csv orignal (aunque sea Nan)
+--> Juntar la salida de fondo y columna aunque no todos tengas todos los datos
+--> Crear .csv de archivos NO cargables

@@ -1,6 +1,9 @@
 Cargando el archivo 01.01.21 MAF9-SE-3320-01-02-A.csv...
-Comprobando nombre del archivo:
--> Por definir ...
+El archivo SI contiene las columnas necesarias
+De las columnas obligatorias, el archivo: 
+Contiene: MALLA ID POZO DIAMETRO PLG
+No contiene: CARGA FONDO DISENO  KG FONDO DISENO CARGA FONDO REAL  KG FONDO REAL 
+Contiene: CARGA COLUMNA  DISENO KG COLUMNA DISENOCARGA COLUMNA REAL KG COLUMNA REAL
 El archivo SI contiene las columnas necesarias
 De las columnas obligatorias, el archivo: 
 Contiene: MALLA ID POZO DIAMETRO PLG
