@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
+# %%
 
 # ## Requerimientos
 
-# In[1]:
+# %%
 
 
 import pandas as pd
@@ -18,20 +19,20 @@ import glob
 
 # ## Archivo y directorio
 
-# In[52]:
+# %%
 
 
 os.path.abspath('')
 path = os.path.abspath('')
 
 
-# In[53]:
+# %%
 
 
 print('Abriendo carpeta: '+ path +' ...')
 
 
-# In[54]:
+# %%
 
 
 timestr = time.strftime("%Y%m%d")
@@ -39,7 +40,7 @@ timestr = timestr
 # sys.stdout=open(timestr + ".txt","w")
 
 
-# In[55]:
+# %%
 
 
 def alerta(list):
@@ -48,7 +49,7 @@ def alerta(list):
     else: print (mensaje_neg)
 
 
-# In[56]:
+# %%
 
 
 #with open('default_cols.txt', 'w') as f:
@@ -58,7 +59,7 @@ def alerta(list):
 
 # Cargar archivo a comprobar:
 
-# In[58]:
+# %%
 
 
 extension = 'csv'
@@ -67,10 +68,10 @@ result = glob.glob('*.{}'.format(extension))
 print(result)
 
 
-# In[59]:
+# %%
 
 
-folder = 'Raw_data/'
+folder = ''
 file_name = '02.01.21 MAF7-R1-2750-03-05-B'
 extension = '.csv'
 final_name = folder+file_name+extension
@@ -81,16 +82,39 @@ df = data.copy()
 
 # ## Pre-procesamiento de columnas
 
-# In[8]:
+# %%
 
 
 #Listado de columnas totales por defecto:
-with open('default_cols.txt', 'r') as f:
-    default_cols = [str(line.strip()) for line in f]
-    
-#Listado de columnas obligatorias y necesarias:    
-with open('required_cols.txt', 'r') as f:
-    required_cols = [str(line.strip()) for line in f]
+# with open('default_cols.txt', 'r') as f:
+#     default_cols = [str(line.strip()) for line in f]
+
+default_cols = ["MALLA",
+"ID POZO",
+"DIAMETRO PLG",
+"CARGA FONDO DISENO", 
+"KG FONDO DISENO", 
+"AIRE FONDO DISENO", 
+"CARGA COLUMNA  DISENO",
+"KG COLUMNA DISENO",
+"AIRE INTERMEDIO DISENO", 
+"GRAVILLA INTERMEDIO DISENO", 
+"AIRE SUPERIOR DISENO",
+"TACO GRAVILLA DISENO", 
+"SECUENCIA DETONACION DISENO",
+"PROFUNDIDAD REAL",
+"CARGA FONDO REAL", 
+"KG FONDO REAL", 
+"AIRE FONDO REAL", 
+"CARGA COLUMNA REAL",
+"KG COLUMNA REAL",
+"AIRE INTERMEDIO REAL", 
+"GRAVILLA INTERMEDIO REAL", 
+"AIRE SUPERIOR REAL",
+"TACO GRAVILLA REAL", 
+"SECUENCIA DETONACION REAL",
+"AGUA"]
+
     
 default_cols[3] = default_cols[3].replace('CARGA FONDO DISENO', 'CARGA FONDO DISENO ')
 default_cols[4] = default_cols[4].replace('KG FONDO DISENO', 'KG FONDO DISENO ')
@@ -110,7 +134,7 @@ default_cols[22] = default_cols[22].replace('TACO GRAVILLA REAL', 'TACO GRAVILLA
 
 # ### Pre procesamiento explosivos
 
-# In[9]:
+# %%
 
 
 required_cols = ['MALLA', 'ID POZO', 'DIAMETRO PLG']
@@ -156,13 +180,13 @@ if (set(columna_diseno) <= set(default_cols) and set(columna_real) <= set(defaul
 
 # Conservar solo las que son posibles de cargar con explosivos de fondo o mas
 
-# In[10]:
+# %%
 
 
 fondo_cols = ['CARGA FONDO DISENO ','KG FONDO DISENO ','CARGA FONDO REAL ','KG FONDO REAL ']
 
 
-# In[11]:
+# %%
 
 
 df_fondo_ready = df.dropna(subset=['CARGA FONDO DISENO ','KG FONDO DISENO ','CARGA FONDO REAL ','KG FONDO REAL '])
@@ -173,13 +197,13 @@ df_fondo_ready[fondo_cols].head(5)
 
 # Conservar solo las que son posibles de cargar con explosivos de columna o mas
 
-# In[12]:
+# %%
 
 
 columna_cols = ['CARGA COLUMNA  DISENO','KG COLUMNA DISENO','CARGA COLUMNA REAL','KG COLUMNA REAL']
 
 
-# In[13]:
+# %%
 
 
 df_columna_ready = df.dropna(subset=['CARGA COLUMNA  DISENO','KG COLUMNA DISENO','CARGA COLUMNA REAL','KG COLUMNA REAL'])
@@ -189,7 +213,7 @@ df_columna_ready = df.dropna(subset=['CARGA COLUMNA  DISENO','KG COLUMNA DISENO'
 
 # ### Explosivo caso 3: Carga de Fondo y Columna
 
-# In[14]:
+# %%
 
 
 cols = fondo_cols+columna_cols
@@ -206,7 +230,7 @@ df_both_explosives[cols].head(5)
 
 # ### Consolidación explosivos
 
-# In[15]:
+# %%
 
 
 #Valido pero solo con fondo
@@ -215,7 +239,7 @@ df_only_fondo = pd.concat([df_fondo_ready,df_both_explosives]).drop_duplicates(k
 df_only_columna = pd.concat([df_columna_ready,df_both_explosives]).drop_duplicates(keep=False)
 
 
-# In[16]:
+# %%
 
 
 filtered_aux = pd.concat([df_only_columna,df_only_fondo])
@@ -223,7 +247,7 @@ filtered_df = pd.concat([filtered_aux,df_both_explosives])
 # filtered_df.to_csv(timestr + ".csv", index=False)
 
 
-# In[17]:
+# %%
 
 
 df_not_ready = pd.concat([df,filtered_df]).drop_duplicates(keep=False)
@@ -232,7 +256,7 @@ df_not_ready = pd.concat([df,filtered_df]).drop_duplicates(keep=False)
 # df_not_ready.to_csv(not_ready_name + ".csv", index=False)
 
 
-# In[18]:
+# %%
 
 
 # df_len = int(len(df))
@@ -247,14 +271,14 @@ df_not_ready = pd.concat([df,filtered_df]).drop_duplicates(keep=False)
 
 # ## Tratamiento de Mallas
 
-# In[19]:
+# %%
 
 
 df = filtered_df.copy()
 df['MALLA']
 
 
-# In[20]:
+# %%
 
 
 print("Comprobando si el nombre de las mallas contiene prefijo válido:")
@@ -272,7 +296,7 @@ mensaje_pos = "-> BIEN!, El nombre de las mallas SI cumple el formato de prefijo
 # alerta(check)
 
 
-# In[21]:
+# %%
 
 
 print('Revisando si existen mallas con sufijo "_vm":')
@@ -283,7 +307,7 @@ print ('-> Se han econtrado '+ str(suffix_count)+' mallas con sufijo "_vm"')
 
 # ## Tratamiento de pozos
 
-# In[22]:
+# %%
 
 
 #Identificador de Pozo en la malla de perforacion
@@ -292,7 +316,7 @@ id_pozo = pd.to_numeric(df['ID POZO'], errors='coerce')
 print ('-> Existen '+ str(id_pozo.isna().sum()) + ' pozos que no podrán ser importador por ser AUX o vacio')
 
 
-# In[23]:
+# %%
 
 
 df_id_pozo = df.dropna(subset=['ID POZO'])
@@ -301,7 +325,7 @@ df_id_pozo['ID POZO'] = list(map(str, df_id_pozo['ID POZO']))
 # df_id_pozo['ID POZO']
 
 
-# In[24]:
+# %%
 
 
 df_id_pozo['ID POZO']
@@ -309,13 +333,13 @@ df_id_pozo['ID POZO']
 
 # ## Formato de valores 
 
-# In[25]:
+# %%
 
 
 df = df_id_pozo.copy()
 
 
-# In[26]:
+# %%
 
 
 print('Asegurando exactitud valores numericos:')
@@ -326,7 +350,7 @@ df['TACO GRAVILLA REAL '] = np.around(list(map(float, df['TACO GRAVILLA REAL '])
 # data['DIAMETRO PLG']
 
 
-# In[27]:
+# %%
 
 
 print ('Asegurando formato de valores ...')
@@ -357,7 +381,7 @@ df['AGUA'] = list(map(float, df['AGUA']))
 print ('-> Formato numérico asegurado')
 
 
-# In[28]:
+# %%
 
 
 print ('Comprobando información mínima de carga:')
@@ -368,31 +392,25 @@ print ('Existen '+ str(len(df['DIAMETRO PLG']))+' diámetros PGL válidos')
 
 # ## Exportación
 
-# In[45]:
+# %%
 
 
 from pathlib import Path
 
 
-# In[46]:
+# %%
 
 
 Path(file_name).mkdir(parents=True, exist_ok=True)
 
 
-# In[47]:
+# %%
 
 
 export_dir = file_name+"/"
 
 
-# In[48]:
-
-
-export_dir+export_name
-
-
-# In[49]:
+# %%
 
 
 export_name = 'Valid-' + file_name
@@ -400,7 +418,7 @@ df.to_csv(export_dir+export_name + ".csv", index=False)
 print ('Archivo válido exportado: ' + export_name)
 
 
-# In[50]:
+# %%
 
 
 not_ready_name = "Invalid-" + file_name
@@ -408,20 +426,14 @@ df_not_ready.to_csv(export_dir+not_ready_name + ".csv", index=False)
 print ('Archivo NO válido exportado: ' + not_ready_name)
 
 
-# In[60]:
+# %%
 
 
 sys.stdout.close()
 
 
-# In[62]:
+# %%
 
 
 # !jupyter nbconvert --to script script.ipynb
-
-
-# In[ ]:
-
-
-
 
